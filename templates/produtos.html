@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+<table>
+    <thead>
+      <tr>
+          <th>ID</th>
+          <th>NOME</th>
+          <th>PREÇO COMPRA</th>
+          <th>PREÇO VENDA</th>
+          <th>ESTOQUE</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for item in produtos %}
+      <tr>
+        {% for elem in item %}
+        <td>{{ elem }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
