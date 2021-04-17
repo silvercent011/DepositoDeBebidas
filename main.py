@@ -24,5 +24,9 @@ def fornecedores():
     info = db.select_rows('SELECT * FROM fornecedores')
     return render_template('fornecedores.html', fornecedores=info)
 
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return render_template('base.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
