@@ -18,11 +18,41 @@ def produtos():
     info = db.select_rows('SELECT * FROM produtos')
     return render_template('produtos.html', produtos=info)
 
+@app.route('/produtos/alcoolicos', methods=['GET', 'POST'])
+def produtos_alcoolicos():
+    db = Database(DB_INFO)
+    info = db.select_rows('SELECT * FROM bebida_alcoolica')
+    return render_template('produtos.html', produtos=info)
+
+@app.route('/produtos/nao-alcoolicos', methods=['GET', 'POST'])
+def produtos_nao_alcoolicos():
+    db = Database(DB_INFO)
+    info = db.select_rows('SELECT * FROM bebida_nao_alcoolica')
+    return render_template('produtos.html', produtos=info)
+
 @app.route('/fornecedores', methods=['GET', 'POST'])
 def fornecedores():
     db = Database(DB_INFO)
     info = db.select_rows('SELECT * FROM fornecedores')
     return render_template('fornecedores.html', fornecedores=info)
+
+@app.route('/funcionarios', methods=['GET', 'POST'])
+def funcionarios():
+    db = Database(DB_INFO)
+    info = db.select_rows('SELECT * FROM funcionarios')
+    return render_template('fornecedores.html', funcionarios=info)
+
+@app.route('/pedidos/fornecedores', methods=['GET', 'POST'])
+def pedido_fornecedores():
+    db = Database(DB_INFO)
+    info = db.select_rows('SELECT * FROM pedido_fornecedor')
+    return render_template('fornecedores.html', funcionarios=info)
+
+@app.route('/pedidos/clientes', methods=['GET', 'POST'])
+def pedido_cliente():
+    db = Database(DB_INFO)
+    info = db.select_rows('SELECT * FROM pedido_cliente')
+    return render_template('fornecedores.html', funcionarios=info)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
