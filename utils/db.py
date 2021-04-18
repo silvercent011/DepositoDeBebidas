@@ -26,3 +26,12 @@ class Database():
             records = [row for row in cur.fetchall()]
             cur.close()
             return records
+    
+    def update_rows(self, query):
+        self.connect()
+        with self.connection.cursor() as cur:
+            cur.execute(query)
+            self.connection.commit()
+            records = [row for row in cur.fetchall()]
+            cur.close()
+            return records
