@@ -24,7 +24,7 @@
         <tr>
           <td>{{ funcionario.cpf }}</td>
           <td>{{ funcionario.nome }}</td>
-          <td>{{ funcionario.adicionado_em }}</td>
+          <td>{{ funcionario.adicionado_em.strftime('%d-%m-%Y') }}</td>
           {% if funcionario.gerente %}
             <td>{{funcionario.gerente}}</td>
           {% else %}
