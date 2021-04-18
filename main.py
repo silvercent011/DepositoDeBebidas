@@ -40,7 +40,7 @@ def fornecedores():
 def funcionarios():
     db = Database(DB_INFO)
     info = db.select_rows('SELECT * FROM funcionarios')
-    return render_template('fornecedores.html', funcionarios=info)
+    return render_template('funcionarios.html', funcionarios=info)
 
 @app.route('/pedidos/fornecedores', methods=['GET', 'POST'])
 def pedido_fornecedores():

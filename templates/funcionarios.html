@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+<table>
+    <thead>
+      <tr>
+          <th>CPF</th>
+          <th>NOME</th>
+          <th>ADICIONADO EM</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for funcionario in funcionarios %}
+      <tr>
+        {% for elem in funcionario %}
+          <td>{{ elem }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
