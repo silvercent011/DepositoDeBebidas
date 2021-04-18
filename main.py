@@ -46,13 +46,13 @@ def funcionarios():
 def pedido_fornecedores():
     db = Database(DB_INFO)
     info = db.select_rows('SELECT * FROM pedido_fornecedor')
-    return render_template('fornecedores.html', funcionarios=info)
+    return render_template('pedido.html', pedidos=info)
 
 @app.route('/pedidos/clientes', methods=['GET', 'POST'])
 def pedido_cliente():
     db = Database(DB_INFO)
     info = db.select_rows('SELECT * FROM pedido_cliente')
-    return render_template('fornecedores.html', funcionarios=info)
+    return render_template('pedido.html', pedidos=info)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
