@@ -18,11 +18,11 @@
       </thead>
       
       <tbody>
-        {% for item in fornecedores %}
+        {% for fornecedor in fornecedores.values() %}
         <tr>
-          {% for elem in item %}
-          <td>{{ elem }}</td>
-          {% endfor %}
+          <td>{{ fornecedor.cnpj }}</td>
+          <td>{{ fornecedor.nome }}</td>
+          <td>{{ fornecedor.adicionado_em.strftime('%d-%m-%Y') }}</td>
           <td>   
             <button class="waves-effect waves-light btn blue"><i class="material-icons left">search</i>Detalhes</button>
             <button class="waves-effect waves-light btn red"><i class="material-icons left">delete</i>Excluir</button>

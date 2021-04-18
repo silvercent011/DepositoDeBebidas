@@ -34,7 +34,11 @@ def produtos_nao_alcoolicos():
 def fornecedores():
     db = Database(DB_INFO)
     info = db.select_rows('SELECT * FROM fornecedores')
-    return render_template('fornecedores.html', fornecedores=info)
+    fornecedores_dict = {}
+
+    for i in range(len(info)):
+        fornecedores_dict[info[i][0]] = {'cnpj': info[i][0], 'nome': info[i][1], 'adicionado_em': info[i][2]}
+    return render_template('fornecedores.html', fornecedores=fornecedores_dict)
 
 @app.route('/funcionarios', methods=['GET', 'POST'])
 def funcionarios():
