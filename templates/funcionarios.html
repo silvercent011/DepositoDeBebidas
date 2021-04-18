@@ -14,18 +14,22 @@
           <th>CPF</th>
           <th>NOME</th>
           <th>ADICIONADO EM</th>
-          <th>SENHA</th>
-          <th>TELEFONE</th>
+          <th>GERENCIADO POR</th>
           <th>AÇÕES</th>
         </tr>
       </thead>
       
       <tbody>
-        {% for funcionario in funcionarios %}
+        {% for funcionario in funcionarios.values() %}
         <tr>
-          {% for elem in funcionario %}
-          <td>{{ elem }}</td>
-          {% endfor %}
+          <td>{{ funcionario.cpf }}</td>
+          <td>{{ funcionario.nome }}</td>
+          <td>{{ funcionario.adicionado_em.strftime('%d-%m-%Y') }}</td>
+          {% if funcionario.gerente %}
+            <td>{{funcionario.gerente}}</td>
+          {% else %}
+            <td>- -</td>
+          {% endif %}
           <td>   
             <button class="waves-effect waves-light btn blue"><i class="material-icons left">search</i>Detalhes</button>
             <button class="waves-effect waves-light btn red"><i class="material-icons left">delete</i>Excluir</button>
