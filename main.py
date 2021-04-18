@@ -40,7 +40,15 @@ def fornecedores():
 def funcionarios():
     db = Database(DB_INFO)
     info = db.select_rows('SELECT * FROM funcionarios')
-    return render_template('funcionarios.html', funcionarios=info)
+    funcionarios_dict = {}
+
+    for i in range(len(info)):
+        funcionarios_dict[info[i][0]] = {'cpf': info[i][0], 'nome': info[i][1], 'adicionado_em': info[i][2]}
+        if info[i][4]:
+            gerente_nome = db.select_rows(f'SELECT nome FROM funcionarios WHERE cpf=\'{info[i][4]}\'')[0][0]
+            funcionarios_dict[info[i][0]]['gerente'] = f'{info[i][4]} - {gerente_nome}'
+
+    return render_template('funcionarios.html', funcionarios=funcionarios_dict)
 
 @app.route('/pedidos/fornecedores', methods=['GET', 'POST'])
 def pedido_fornecedores():
