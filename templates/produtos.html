@@ -11,11 +11,12 @@
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>NOME</th>
-          <th>PREÇO COMPRA</th>
-          <th>PREÇO VENDA</th>
-          <th>ESTOQUE</th>
+          <th style="text-align: center;">ID</th>
+          <th style="text-align: center;">NOME</th>
+          <th style="text-align: center;">PREÇO COMPRA</th>
+          <th style="text-align: center;">PREÇO VENDA</th>
+          <th style="text-align: center;">ESTOQUE</th>
+          <th style="text-align: center;">TEOR ALCOOLICO (%)</th>
         </tr>
       </thead>
       
@@ -23,12 +24,12 @@
         {% for item in produtos %}
         <tr>
           {% for elem in item %}
-        <td>{{ elem }}</td>
+        <td style="text-align: center;">{{ elem }}</td>
+        {% endfor %}
         <td>   
           <button class="waves-effect waves-light btn blue"><i class="material-icons left">search</i>Detalhes</button>
           <button class="waves-effect waves-light btn red"><i class="material-icons left">delete</i>Excluir</button>
-      </td>
-        {% endfor %}
+        </td>
       </tr>
     {% endfor %}
   </tbody>
