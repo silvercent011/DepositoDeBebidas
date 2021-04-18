@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
-# from env import DB_INFO
+
+from Forms.NovoProdutoForm import NovoProduto
 
 from utils.db import *
 import json
@@ -10,6 +11,7 @@ with open('./env.json','r') as env:
 
 
 app = Flask(__name__)
+app.secret_key = 'XABLAU'
 db = SQLAlchemy(app)
 
 @app.route('/produtos', methods=['GET', 'POST'])
@@ -17,6 +19,16 @@ def produtos():
     db = Database(DB_INFO)
     info = db.select_rows('SELECT * FROM produtos')
     return render_template('produtos.html', produtos=info)
+
+@app.route('/produtos/cadastrar', methods=['GET', 'POST'])
+def cadastro_produtos():
+    tipos = [(0,'ALCOOLICA'),(1,'NAO ALCOOLICA')]
+    form = NovoProduto(request.form)
+    form.tipo.choices = tipos
+    db = Database(DB_INFO)
+    if request.method == 'POST':
+        data = request.form
+    return render_template('cadastro_produtos.html', form=form)
 
 @app.route('/produtos/alcoolicos', methods=['GET', 'POST'])
 def produtos_alcoolicos():
