@@ -2,6 +2,9 @@ from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 from Forms.NovoProdutoForm import NovoProduto
+from Forms.NovaVenda import NovaVenda
+from Forms.NovoFuncionario import NovoFuncionario
+from Forms.NovoFornecedor import NovoFornecedor
 
 from utils.db import *
 import json
@@ -20,9 +23,17 @@ def produtos():
     info = db.select_rows('SELECT * FROM produtos')
     return render_template('produtos.html', produtos=info)
 
+@app.route('/vender', methods=['GET', 'POST'])
+def nova_venda():
+    form = NovaVenda(request.form)
+    db = Database(DB_INFO)
+    if request.method == 'POST':
+        data = request.form
+    return render_template('nova_venda.html', form=form)
+
 @app.route('/produtos/cadastrar', methods=['GET', 'POST'])
 def cadastro_produtos():
-    tipos = [(0,'ALCOOLICA'),(1,'NAO ALCOOLICA')]
+    tipos = [(0,'ALCOOLICA'),(1,'NAO ALCOOLICA'), (2, 'DIET')]
     form = NovoProduto(request.form)
     form.tipo.choices = tipos
     db = Database(DB_INFO)
@@ -51,6 +62,22 @@ def fornecedores():
     for i in range(len(info)):
         fornecedores_dict[info[i][0]] = {'cnpj': info[i][0], 'nome': info[i][1], 'adicionado_em': info[i][2]}
     return render_template('fornecedores.html', fornecedores=fornecedores_dict)
+
+@app.route('/fornecedores/cadastrar', methods=['GET', 'POST'])
+def novo_fornecedor():
+    form = NovoFornecedor(request.form)
+    db = Database(DB_INFO)
+    if request.method == 'POST':
+        data = request.form
+    return render_template('cadastro_fornecedor.html', form=form)
+
+@app.route('/funcionarios/cadastrar', methods=['GET', 'POST'])
+def novo_funcionario():
+    form = NovoFuncionario(request.form)
+    db = Database(DB_INFO)
+    if request.method == 'POST':
+        data = request.form
+    return render_template('cadastro_funcionario.html', form=form)
 
 @app.route('/funcionarios', methods=['GET', 'POST'])
 def funcionarios():
