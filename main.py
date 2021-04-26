@@ -63,6 +63,19 @@ def fornecedores():
         fornecedores_dict[info[i][0]] = {'cnpj': info[i][0], 'nome': info[i][1], 'adicionado_em': info[i][2]}
     return render_template('fornecedores.html', fornecedores=fornecedores_dict)
 
+@app.route('/fornecedores/<cnpj>', methods=['GET', 'POST'])
+def fornecedor(cnpj):
+    db = Database(DB_INFO)
+    info = db.select_rows(f'SELECT * FROM fornecedores WHERE cnpj=\'{cnpj}\'')
+
+    telefones = db.select_rows(f'SELECT numero FROM telefones WHERE cnpj=\'{cnpj}\'')
+    enderecos = db.select_rows(f'SELECT * FROM enderecos WHERE cnpj=\'{cnpj}\'')
+
+    pedidos_fornecedores = db.select_rows(f'SELECT pedido_id, total_pedido_fornecedor(pedido_id) FROM pedido_fornecedor WHERE fornecedor_cnpj=\'{cnpj}\'')
+
+    return render_template('fornecedor.html', fornecedor=info, telefones=telefones,
+    enderecos=enderecos, pedidos_fornecedores=pedidos_fornecedores)
+
 @app.route('/fornecedores/cadastrar', methods=['GET', 'POST'])
 def novo_fornecedor():
     form = NovoFornecedor(request.form)
@@ -106,16 +119,33 @@ def funcionario(cpf):
         gerente = None
         gerenciados = db.select_rows(f'SELECT cpf, nome FROM funcionarios WHERE gerente_cpf=\'{cpf}\'')
 
+    pedidos_clientes = db.select_rows(f'SELECT pedido_id, total_pedido_cliente(pedido_id) FROM pedido_cliente WHERE funcionario_cpf=\'{cpf}\'')
+    pedidos_fornecedores = db.select_rows(f'SELECT pedido_id, total_pedido_fornecedor(pedido_id) FROM pedido_fornecedor WHERE funcionario_cpf=\'{cpf}\'')
 
     return render_template('funcionario.html', dados=funcionario_info, cpf=cpf,
-    endereco=endereco, telefones=telefones, gerente=gerente, gerenciados=gerenciados)
+    endereco=endereco, telefones=telefones, gerente=gerente, gerenciados=gerenciados,
+    pedidos_clientes=pedidos_clientes, pedidos_fornecedores=pedidos_fornecedores)
 
 
 @app.route('/pedidos/fornecedores', methods=['GET', 'POST'])
 def pedido_fornecedores():
     db = Database(DB_INFO)
     info = db.select_rows('SELECT * FROM pedido_fornecedor')
-    return render_template('pedido.html', pedidos=info)
+    return render_template('pedidos_fornecedores.html', pedidos=info)
+
+@app.route('/pedidos/fornecedores/<id>', methods=['GET', 'POST'])
+def pedido_fornecedor(id):
+    db = Database(DB_INFO)
+    info = db.select_rows(f'SELECT * FROM pedido_fornecedor WHERE pedido_id={id}')
+    pedido_produto = db.select_rows(
+        f'SELECT pr.nome, pp.quantidade, pr.valor_compra, pp.quantidade*(pr.valor_compra) AS TOTAL '
+        'FROM produto_pedidos pp '
+        'JOIN produtos pr ' 
+        f'ON pr.id=pp.produto_id WHERE pp.pedido_fornecedor_id={id};'
+    )
+    funcionario = db.select_rows(f'SELECT nome FROM funcionarios WHERE cpf=\'{info[0][2]}\'')[0][0]
+    total = db.select_rows(f'SELECT total_pedido_fornecedor({id});')[0][0]
+    return render_template('pedido_fornecedor.html', info=info, pedido_produto=pedido_produto, total=total, funcionario=funcionario)
 
 @app.route('/pedidos/clientes', methods=['GET', 'POST'])
 def pedido_cliente():

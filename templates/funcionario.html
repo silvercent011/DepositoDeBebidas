@@ -1,30 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- <div class="card">
-  <div class="card-content">
-    <span class="card-title">Funcionários
-
-      <button class="waves-effect waves-light btn green">
-          <i class="material-icons"></i>Novo
-      </button>
-  </span>
-    <table>
-      <thead>
-        <tr>
-          <th>CPF</th>
-          <th>NOME</th>
-          <th>ADICIONADO EM</th>
-          <th>GERENCIADO POR</th>
-          <th>AÇÕES</th>
-        </tr>
-      </thead>
-      
-      <tbody>
-       
-      </tbody>
-    </table>
-  </div>
-</div> -->
 <div class="card">
   <div class="card-content">
     <p>Nome: {{dados.0.1}}</p>
@@ -41,6 +16,22 @@
       <ul> Responsável por:
         {% for gerenciado in gerenciados %}
           <li><a href="/funcionarios/{{gerenciado.0}}">{{gerenciado.1}} - {{gerenciado.0}}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if pedidos_clientes %}
+      <ul>
+        <h6><b>Pedidos vendidos</b></h6>
+        {% for pedido in pedidos_clientes %}
+          <li><a href="/pedidos/clientes/{{pedido.0}}">Pedido {{pedido.0}}</a> - Total: {{pedido.1}}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if pedidos_fornecedores %}
+      <ul>
+        <h6><b>Pedidos feitos ao fornecedor</b></h6>
+        {% for pedido in pedidos_fornecedores %}
+          <li><a href="/pedidos/fornecedores/{{pedido.0}}">Pedido {{pedido.0}}</a> - Total: {{pedido.1}}</li>
         {% endfor %}
       </ul>
     {% endif %}

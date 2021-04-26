@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Pedidos
+    
+                <button class="waves-effect waves-light btn green">
+                    <i class="material-icons"></i>Novo
+                </button>
+            </span>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>DATA</th>
+                        <th>FUNCIONÁRIO</th>
+                        <th>OPÇÕES</th>
+                    </tr>
+        </thead>
+        
+        <tbody>
+            {% for item in pedidos %}
+            <tr>
+                {% for elem in item %}
+                <td>{{ elem }}</td>
+                {% endfor %}
+                <td>   
+                    <a href="fornecedores/{{item.0}}" class="waves-effect waves-light btn blue"><i class="material-icons left">search</i>Detalhes</a>
+                    <button class="waves-effect waves-light btn red"><i class="material-icons left">delete</i>Excluir</button>
+                </td>
+                </tr>
+        {% endfor %}
+    </tbody>
+      </table>
+    </div>
+    </div>
+</div>
+{% endblock %}

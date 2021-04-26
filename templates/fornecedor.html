@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <div class="card-content">
+        <p>Nome: <b>{{fornecedor.0.1}}</b></p>
+        <p>CNPJ: <b>{{fornecedor.0.0}}</b></p>
+        <p>Adicionado em <b>{{fornecedor.0.2.strftime('%d-%m-%Y')}}</b></p>
+        <ul><b>Telefones</b>
+            {% for telefone in telefones %}
+                <li>{{telefone.0}}</li>
+            {% endfor %}
+        </ul>
+        <ul>
+            <b>Endereços</b>
+            {% for endereco in enderecos %}
+                <li>{{endereco.0}}, {{endereco.1}}, {{endereco.2}}, {{endereco.3}}, Número: {{endereco.4}}</li>
+            {% endfor %}
+        </ul>
+        <ul>
+            <h6><b>Pedidos feitos</b></h6>
+            {% for pedido in pedidos_fornecedores %}
+              <li><a href="/pedidos/fornecedores/{{pedido.0}}">Pedido {{pedido.0}}</a> - Total: {{pedido.1}}</li>
+            {% endfor %}
+          </ul>
+    </div>
+</div>
+{% endblock %}

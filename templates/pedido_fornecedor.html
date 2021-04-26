@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block content %}
 <div class="card">
     <div class="card-content">
         <p>Pedido número {{info.0.0}}</p>
-        <p>Pedido tirado por <a href="/funcionarios/{{info.0.2}}"><b>{{funcionario}}</b></a> - {{info.0.2}}</p>
+        <p>Pedido feito por <b>{{funcionario}}</b> - {{info.0.2}}</p>
         <table>
             <thead>
               <tr>
