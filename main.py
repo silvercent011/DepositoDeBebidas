@@ -93,6 +93,24 @@ def funcionarios():
 
     return render_template('funcionarios.html', funcionarios=funcionarios_dict)
 
+@app.route('/funcionarios/<cpf>', methods=['GET', 'POST'])
+def funcionario(cpf):
+    db = Database(DB_INFO)
+    funcionario_info = db.select_rows(f'SELECT * FROM funcionarios WHERE cpf=\'{cpf}\'')
+    endereco = db.select_rows(f'SELECT * FROM enderecos WHERE cpf=\'{cpf}\'')
+    telefones = db.select_rows(f'SELECT numero FROM telefones WHERE cpf=\'{cpf}\'')
+    if funcionario_info[0][4]:
+        gerente = db.select_rows(f'SELECT cpf, nome FROM funcionarios WHERE cpf=\'{funcionario_info[0][4]}\'')
+        gerenciados = None
+    else:
+        gerente = None
+        gerenciados = db.select_rows(f'SELECT cpf, nome FROM funcionarios WHERE gerente_cpf=\'{cpf}\'')
+
+
+    return render_template('funcionario.html', dados=funcionario_info, cpf=cpf,
+    endereco=endereco, telefones=telefones, gerente=gerente, gerenciados=gerenciados)
+
+
 @app.route('/pedidos/fornecedores', methods=['GET', 'POST'])
 def pedido_fornecedores():
     db = Database(DB_INFO)
@@ -105,9 +123,24 @@ def pedido_cliente():
     info = db.select_rows('SELECT * FROM pedido_cliente')
     return render_template('pedido.html', pedidos=info)
 
+@app.route('/pedidos/clientes/<id>', methods=['GET', 'POST'])
+def pedido_cliente_id(id):
+    db = Database(DB_INFO)
+    info = db.select_rows(f'SELECT * FROM pedido_cliente WHERE pedido_id={id}')
+    pedido_produto = db.select_rows(
+        f'SELECT pr.nome, pp.quantidade, pr.valor_venda, pp.quantidade*(pr.valor_venda) AS TOTAL '
+        'FROM produto_pedidos pp '
+        'JOIN produtos pr ' 
+        f'ON pr.id=pp.produto_id WHERE pp.pedido_cliente_id={id};'
+    )
+    funcionario = db.select_rows(f'SELECT nome FROM funcionarios WHERE cpf=\'{info[0][2]}\'')[0][0]
+    total = db.select_rows(f'SELECT total_pedido_cliente({id})')[0][0]
+    return render_template('pedido_cliente.html', info=info, total=total,
+    pedido_produto=pedido_produto, funcionario=funcionario)
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('base.html')
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

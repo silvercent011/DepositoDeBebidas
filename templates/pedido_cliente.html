@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-content">
+        <p>Pedido número {{info.0.0}}</p>
+        <p>Pedido tirado por <b>{{funcionario}}</b> - {{info.0.2}}</p>
+        <table>
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Valor</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+                {% for pedido in pedido_produto %}
+                    <tr>
+                        <td>{{pedido.0}}</td>
+                        <td>{{pedido.1}}</td>
+                        <td>{{pedido.2}}</td>
+                        <td>{{pedido.3}}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td><b>TOTAL DO PEDIDO:</b></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <b>{{total}}</b>
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}

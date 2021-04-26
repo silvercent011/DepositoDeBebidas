@@ -12,14 +12,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   {% block head %}
   {% endblock %}
+  <style>
+      body {
+          display: flex;
+          min-height: 100vh;
+          flex-direction: column;
+      }
+
+      main {
+          flex: 1 0 auto;
+      }
+  </style>
 </head>
 
-<body class="grey darken-4">
+<body class="light-blue lighten-5">
   <nav>
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo">Xablau Bebidas</a>
+      <a href="/" class="brand-logo">PRECISAMOS DE NOTA MÁXIMA PRA PASSAR Bebidas</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li></li>
+        <li><a href="/funcionarios">Funcionários</a></li>
+        <li><a href="/fornecedores">Fornecedores</a></li>
       </ul>
     </div>
   </nav>
@@ -30,6 +42,29 @@
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Passa nois, professora</h5>
+          <p class="grey-text text-lighten-4">Pelo amor de Deus, professora. Eu to pra ter um troço, dá nota máxima pra a gente ter uma mínima chance de passar direto</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Alguma coisa aqui</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Que vontade de passar em banco de dados</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      © Desde 2021 tentando passar em banco de dados
+      <a class="grey-text text-lighten-4 right" href="#!">É sério</a>
+      </div>
+    </div>
+  </footer>
 </body>
 
 </html>
